@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/x50">
+    <TextView
+        android:id="@+id/item_add_box_tv_box"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/shape_bg_div"
+        android:gravity="center"
+        android:text="箱号" />
+
+    <TextView
+        android:id="@+id/item_add_box_tv_batchNo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/shape_bg_div"
+        android:gravity="center"
+        android:text="批次" />
+
+    <TextView
+        android:id="@+id/item_add_box_tv_QB"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/shape_bg_div"
+        android:gravity="center"
+        android:text="物料" />
+</LinearLayout>
