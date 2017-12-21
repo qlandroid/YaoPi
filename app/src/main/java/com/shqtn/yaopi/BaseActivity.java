@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -19,6 +22,7 @@ import com.shqtn.yaopi.bind.BindViewUtils;
 import com.shqtn.yaopi.ui.widget.TitleView;
 import com.shqtn.yaopi.utils.ActivityUtils;
 import com.shqtn.yaopi.utils.ToastUtils;
+import com.shqtn.yaopi.view.IDialog;
 import com.shqtn.yaopi.zxing.activity.CaptureActivity;
 
 /**
@@ -28,12 +32,15 @@ import com.shqtn.yaopi.zxing.activity.CaptureActivity;
  * @author ql
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, TitleView.OnClickToBackListener {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, TitleView.OnClickToBackListener, IDialog, OnClickBackListener {
     public static final int REQUEST_CODE_DECODE = 16;
     private static final int REQUEST_CODE_ASK_CAMERA = 0x33;
-    TitleView mTitleView;
+    public TitleView mTitleView;
+
 
     private QMUITipDialog loadingDialog;
+    private AlertDialog msgDialog;
+    private BaseFragment currentKJFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +98,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    public Bundle getBundle() {
+        Intent intent = getIntent();
+        if (intent == null) {
+            return null;
+        }
+        return intent.getExtras();
+    }
+
     public void widgetClick(View v) {
 
     }
@@ -126,7 +141,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         switch (requestCode) {
             case REQUEST_CODE_ASK_CAMERA:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -136,6 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 }
                 break;
             default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -155,24 +171,80 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
     public void displayLoadingDialog() {
-        if (loadingDialog == null) {
-            loadingDialog = new QMUITipDialog.Builder(this)
-                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                    .create();
-        }
-
-        loadingDialog.show();
+        displayLoadingDialog("");
     }
 
+    @Override
     public void cancelLoadingDialog() {
         if (loadingDialog != null) {
             loadingDialog.cancel();
         }
     }
 
+    @Override
+    public void displayLoadingDialog(String msg) {
+        if (loadingDialog == null) {
+            loadingDialog = new QMUITipDialog.Builder(this)
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                    .create();
+        }
+        loadingDialog.setTipWord(msg);
+        loadingDialog.show();
+    }
+
+    @Override
+    public void displayMsgDialog(String title, String msg) {
+        if (msgDialog == null) {
+            msgDialog = new AlertDialog.Builder(this)
+                    .create();
+        }
+        msgDialog.setMessage(msg);
+        msgDialog.setTitle(title);
+        msgDialog.show();
+    }
+
+    @Override
+    public void displayMsgDialog(String msg) {
+        displayMsgDialog("", msg);
+    }
+
+    @Override
+    public void cancelMsgDialog() {
+        msgDialog.cancel();
+    }
+
     public void toast(String msg) {
         ToastUtils.show(this, msg
         );
+    }
+
+
+    public void changeFragment(int fm_content, BaseFragment targetFragment) {
+        if (targetFragment == null) {
+            return;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        if (!targetFragment.isAdded()) {
+            transaction.add(fm_content, targetFragment, targetFragment.getClass().getName());
+        }
+        if (currentKJFragment != null && currentKJFragment.isAdded() && !currentKJFragment.isHidden()) {
+            transaction.hide(currentKJFragment);
+        }
+        currentKJFragment = targetFragment;
+
+        transaction.show(targetFragment).commit();
+    }
+
+    @Override
+    public void onClickBack() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onClickQuit() {
+        ActivityUtils.getInstance().quit();
     }
 }

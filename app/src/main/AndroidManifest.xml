@@ -25,7 +25,10 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.IpChangeActivity" />
         <activity android:name=".zxing.activity.CaptureActivity" />
-        <activity android:name=".ui.LoginSelectActivity"></activity>
+        <activity android:name=".ui.LoginSelectActivity" />
+        <activity android:name=".ui.FunctionSelectActivity" />
+        <activity android:name=".ui.ScanningTextActivity" />
+        <activity android:name=".ui.ScanningBoxActivity"></activity>
     </application>
 
 </manifest>

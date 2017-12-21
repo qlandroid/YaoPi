@@ -88,7 +88,6 @@
 
     <Button
         android:id="@+id/login_select_btn_submit"
-        style="@style/button_wrapper_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"

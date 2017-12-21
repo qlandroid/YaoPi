@@ -1,9 +1,11 @@
 package com.shqtn.yaopi.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.shqtn.yaopi.BaseActivity;
 import com.shqtn.yaopi.R;
@@ -17,9 +19,14 @@ import com.shqtn.yaopi.utils.JsonUtils;
 import com.shqtn.yaopi.utils.ParamsFactory;
 import com.shqtn.yaopi.utils.UserUtils;
 import com.shqtn.yaopi.zxing.activity.CaptureActivity;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
+import com.zhy.m.permission.ShowRequestPermissionRationale;
 
 public class LoginActivity extends BaseActivity {
 
+    private static final int REQUECT_CODE_SDCARD = 2;
     @BindView(R.id.activity_login_btn_change_ip)
     Button btnChangeIp;
     @BindView(R.id.activity_login_btn_scanning)
@@ -30,6 +37,38 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void createView() {
         setContentView(R.layout.activity_login);
+    }
+
+
+    @Override
+    public void initData() {
+        super.initData();
+        MPermissions.requestPermissions(this, REQUECT_CODE_SDCARD, Manifest.permission.CAMERA);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        MPermissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionGrant(REQUECT_CODE_SDCARD)
+    public void requestSdcardSuccess() {
+        //统一
+        Toast.makeText(this, "GRANT ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
+    }
+
+    @PermissionDenied(REQUECT_CODE_SDCARD)
+    public void requestSdcardFailed() {
+        displayMsgDialog("启动相机权限是本程序必备的权限，请用户前往应用权限管理，赋予该权限");
+    }
+
+    @ShowRequestPermissionRationale(REQUECT_CODE_SDCARD)
+    public void showdialog() {
+        if (!MPermissions.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA, REQUECT_CODE_SDCARD)) {
+            MPermissions.requestPermissions(this, REQUECT_CODE_SDCARD, Manifest.permission.CAMERA);
+        }
     }
 
     @Override

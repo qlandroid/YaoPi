@@ -179,7 +179,7 @@ public class LoginSelectActivity extends BaseActivity {
     private void clickSubmit() {
         UserUtils.saveClazz(this, mSelectClazz);
         UserUtils.saveTeam(this, mSelectTeam);
-        // startActivity(FunctionActivity.class);
+        startActivity(FunctionSelectActivity.class);
         finish();
     }
 

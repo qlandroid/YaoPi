@@ -164,25 +164,26 @@ public class QMUITipDialog extends Dialog {
 
             }
 
-            if (mTipWord != null && mTipWord.length() > 0) {
-                TextView tipView = new TextView(mContext);
-                tipView.setId(R.id.dialog_tip_tv);
-                LinearLayout.LayoutParams tipViewLP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                if (mCurrentIconType != ICON_TYPE_NOTHING) {
-                    tipViewLP.topMargin = QMUIDisplayHelper.dp2px(mContext, 12);
-                }
-                tipView.setLayoutParams(tipViewLP);
+            TextView tipView = new TextView(mContext);
+            tipView.setId(R.id.dialog_tip_tv);
+            LinearLayout.LayoutParams tipViewLP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                tipView.setEllipsize(TextUtils.TruncateAt.END);
-                tipView.setGravity(Gravity.CENTER);
-                tipView.setMaxLines(2);
-                tipView.setTextColor(ContextCompat.getColor(mContext, R.color.qmui_config_color_white));
-                tipView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                tipView.setText(mTipWord);
-
-                contentWrap.addView(tipView);
+            if (mCurrentIconType != ICON_TYPE_NOTHING) {
+                tipViewLP.topMargin = QMUIDisplayHelper.dp2px(mContext, 12);
             }
+            tipView.setLayoutParams(tipViewLP);
+
+            tipView.setEllipsize(TextUtils.TruncateAt.END);
+            tipView.setGravity(Gravity.CENTER);
+            tipView.setMaxLines(2);
+            tipView.setTextColor(ContextCompat.getColor(mContext, R.color.qmui_config_color_white));
+            tipView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            if (mTipWord != null && mTipWord.length() > 0) {
+                tipView.setText(mTipWord);
+            }
+
+            contentWrap.addView(tipView);
             return dialog;
         }
 

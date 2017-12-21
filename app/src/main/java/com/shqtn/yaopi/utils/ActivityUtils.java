@@ -39,7 +39,15 @@ public class ActivityUtils {
     }
 
     public void removeAllAty() {
+        for (BaseActivity baseActivity : atyList) {
+            baseActivity.finish();
+        }
         atyList.clear();
+    }
+
+    public  void quit() {
+        atyList.clear();
+        System.exit(0);
     }
 
     public BaseActivity getTopAty() {
