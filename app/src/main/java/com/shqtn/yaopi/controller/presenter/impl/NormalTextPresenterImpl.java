@@ -23,7 +23,7 @@ public class NormalTextPresenterImpl extends AbsScanningTextPresenter {
 
     }
 
-    public void setTextPresenterBeand(TextPresenterBean textPresenterBean) {
+    public void setTextPresenterBean(TextPresenterBean textPresenterBean) {
         this.textPresenterBean = textPresenterBean;
     }
 

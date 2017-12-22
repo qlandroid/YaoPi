@@ -19,4 +19,6 @@ public interface IDialog {
     void displayMsgDialog(String msg);
 
     void cancelMsgDialog();
+
+    void toast(String toast);
 }

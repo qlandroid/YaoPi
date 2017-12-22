@@ -33,6 +33,10 @@ public class ScanningBoxActivity extends BaseActivity implements BoxListFragment
         bundle.putParcelable(NORMAL, bean);
     }
 
+    public static void putPresenter(Class presenter, Bundle bundle) {
+        bundle.putString(C.BUNDLE_PRESENTER_NAME, presenter.getCanonicalName());
+    }
+
     private BoxTextFragment mBoxTextFragment;
     private BoxListFragment mBoxListFragment;
 
@@ -131,6 +135,11 @@ public class ScanningBoxActivity extends BaseActivity implements BoxListFragment
     @Override
     public void setAddFragmentButton(String name) {
         mBoxListFragment.setButton(name);
+    }
+
+    @Override
+    public void closeActivity() {
+        finish();
     }
 
     @Override

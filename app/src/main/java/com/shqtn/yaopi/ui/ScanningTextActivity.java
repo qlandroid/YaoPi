@@ -1,7 +1,6 @@
 package com.shqtn.yaopi.ui;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +18,10 @@ public class ScanningTextActivity extends BaseActivity implements ScanningTextCo
 
     public static void put(TextPresenterBean bean, Bundle b) {
         b.putParcelable(SHOW_TAG, bean);
+    }
+
+    public static void put(Class presenter, Bundle b) {
+        b.putString(PRESENTER_NAME, presenter.getCanonicalName());
     }
 
     @BindView(R.id.activity_scanning_text_tv)
@@ -55,7 +58,7 @@ public class ScanningTextActivity extends BaseActivity implements ScanningTextCo
             }
         } else {
             NormalTextPresenterImpl p = new NormalTextPresenterImpl();
-            p.setTextPresenterBeand(bean);
+            p.setTextPresenterBean(bean);
             mPresenter = p;
         }
         mPresenter.setView(this);

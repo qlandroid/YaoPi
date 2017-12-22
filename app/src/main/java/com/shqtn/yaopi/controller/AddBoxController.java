@@ -42,6 +42,8 @@ public class AddBoxController {
 
         void setAddFragmentButton(String name);
 
+        void closeActivity();
+
 
     }
 

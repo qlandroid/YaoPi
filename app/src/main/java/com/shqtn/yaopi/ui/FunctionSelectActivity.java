@@ -12,6 +12,7 @@ import com.shqtn.yaopi.R;
 import com.shqtn.yaopi.bind.BindView;
 import com.shqtn.yaopi.controller.presenter.OperateBoxBean;
 import com.shqtn.yaopi.controller.presenter.TextPresenterBean;
+import com.shqtn.yaopi.controller.presenter.impl.GoodsAdjustRackTextPresenterImpl;
 import com.shqtn.yaopi.controller.presenter.impl.NormalScanningBoxPresenter;
 import com.shqtn.yaopi.utils.ParamsFactory;
 
@@ -60,12 +61,7 @@ public class FunctionSelectActivity extends BaseActivity implements BaseQuickAda
                     ScanningBoxActivity.class, NormalScanningBoxPresenter.class, ParamsFactory.AllocationOutDepot.createScanningManfiest(),
                     new OperateBoxBean(false, ParamsFactory.AllocationOutDepot.createScanningBoxNo(),
                             null,
-                            ParamsFactory.AllocationOutDepot.createSubmit())),
-            new TextPresenterBean("货位调整", "请扫调出描货位条码",
-                    ScanningBoxActivity.class, NormalScanningBoxPresenter.class, ParamsFactory.GoodsAdjust.createScanningManfiest(),
-                    new OperateBoxBean(true, ParamsFactory.InDepot.createScanningBox(),
-                            ParamsFactory.InDepot.createSaveRackSafety(),
-                            ParamsFactory.InDepot.createSubmitSafety()))};
+                            ParamsFactory.AllocationOutDepot.createSubmit()))};
 
     @Override
     public void createView() {
@@ -101,6 +97,11 @@ public class FunctionSelectActivity extends BaseActivity implements BaseQuickAda
 
         if (position == function.length - 1) {
             onBackPressed();
+        } else if (position == function.length - 2) {
+            //货位调整
+            Bundle bundle = new Bundle();
+            ScanningTextActivity.put(GoodsAdjustRackTextPresenterImpl.class, bundle);
+            startActivity(ScanningBoxActivity.class, bundle);
         } else {
             Bundle bundle = new Bundle();
             ScanningTextActivity.put(beans[position], bundle);

@@ -6,7 +6,6 @@ import com.shqtn.yaopi.C;
 import com.shqtn.yaopi.bean.params.Safety;
 import com.shqtn.yaopi.controller.presenter.AbsScanningBoxPresenter;
 import com.shqtn.yaopi.controller.presenter.OperateBoxBean;
-import com.shqtn.yaopi.utils.ParamsFactory;
 
 /**
  * 创建时间:2017/12/21
@@ -51,9 +50,9 @@ public class NormalScanningBoxPresenter extends AbsScanningBoxPresenter {
     public void init() {
         super.init();
         Bundle bundle = getBundle();
-        String manifestNo = bundle.getString(C.MANIFEST_NO);
+        String manifestNo = bundle.getString(C.DECODE);
         getView().setManifestNo(manifestNo);
-        String qty = bundle.getString(C.DEOCDE_QTY);
+        String qty = bundle.getString(C.DECODE_QTY);
         getView().setBoxSize(Integer.parseInt(qty));
         if (bean.isScanningRack()) {
             getView().setAddFragmentButton("扫描库位");

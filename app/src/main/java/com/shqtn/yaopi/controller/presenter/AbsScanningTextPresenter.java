@@ -12,6 +12,8 @@ import com.shqtn.yaopi.http.ksoap.KsoapModelService;
 import com.shqtn.yaopi.http.ksoap.StringCallback;
 import com.shqtn.yaopi.utils.JsonUtils;
 
+import java.sql.ParameterMetaData;
+
 /**
  * 创建时间:2017/12/21
  * 描述:
@@ -25,6 +27,7 @@ public abstract class AbsScanningTextPresenter implements ScanningTextController
     private ScanningTextController.IView iView;
     private String mScanningManifest;
     private boolean isSubmiting;
+    private IGetItemParams iGetItemParams;
 
     @Override
     public void setBundle(Bundle bundle) {
@@ -51,8 +54,7 @@ public abstract class AbsScanningTextPresenter implements ScanningTextController
         Safety manifestSafety = getScanningManifest();
         SubmitParams params = new SubmitParams();
         params.setSafety(manifestSafety);
-        Item item = new Item();
-        item.setBillcode(code);
+        Item item = getItem(code);
         params.setItem(item);
         mScanningManifest = code;
 
@@ -87,6 +89,17 @@ public abstract class AbsScanningTextPresenter implements ScanningTextController
 
     }
 
+    public Item getItem(String code) {
+        if (iGetItemParams == null) {
+            iGetItemParams = new NormalGetItemParamsImpl();
+        }
+        return iGetItemParams.getItem(code);
+    }
+
+    public void setGetItemParams(IGetItemParams params) {
+        this.iGetItemParams = params;
+    }
+
     private void onSuccessAfter(ResultBean result) {
         Bundle bundle = new Bundle();
         putBundle(bundle, result, mScanningManifest);
@@ -109,7 +122,7 @@ public abstract class AbsScanningTextPresenter implements ScanningTextController
      */
     public void putBundle(Bundle bundle, ResultBean resultBean, String scanningCode) {
         bundle.putString(C.DECODE, scanningCode);
-        bundle.putString(C.DEOCDE_QTY, resultBean.getNcback().getQuantity());
+        bundle.putString(C.DECODE_QTY, resultBean.getNcback().getQuantity());
     }
 
 

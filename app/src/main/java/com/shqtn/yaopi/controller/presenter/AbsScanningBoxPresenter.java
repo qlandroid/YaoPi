@@ -39,10 +39,10 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
     private AddBoxController.IView mView;
     private Bundle bundle;
     private SubmitParams params;
-    private List<BoxListFragment.Item> mBoxList = new ArrayList<>();
+    public List<BoxListFragment.Item> mBoxList = new ArrayList<>();
     private Item addBoxParams;
     private Callback mAddBoxCallback;
-    private boolean isSubmiting;
+    public boolean isSubmiting;
     private Item mScanningRackParams;
 
 
@@ -85,6 +85,7 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
         if (isSubmiting) {
             return;
         }
+        getView().displayLoadingDialog("解码中");
         isSubmiting = true;
         KsoapModelService.run(params, mAddBoxCallback);
     }
