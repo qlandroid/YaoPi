@@ -24,7 +24,7 @@ public class IpChangeUtils {
         PreferencesUtils.saveString(context, FILE_IP,KEY_POST,post);
     }
 
-    public static String getPost(Context context){
+    public static String getPort(Context context){
         return PreferencesUtils.queryString(context,FILE_IP,KEY_POST);
     }
 }

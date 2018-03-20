@@ -12,6 +12,7 @@ import com.shqtn.yaopi.BaseActivity;
 import com.shqtn.yaopi.R;
 import com.shqtn.yaopi.bind.BindView;
 import com.shqtn.yaopi.utils.IpChangeUtils;
+import com.shqtn.yaopi.utils.StringUtils;
 
 public class IpChangeActivity extends BaseActivity {
 
@@ -34,6 +35,15 @@ public class IpChangeActivity extends BaseActivity {
         btnYes.setOnClickListener(this);
         tipDialog = new QMUITipDialog.Builder(this).setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
                 .setTipWord("请设置ip").create();
+        String ip = IpChangeUtils.getIp(this);
+        String port = IpChangeUtils.getPort(this);
+        if (!StringUtils.isEmpty(ip)) {
+            etIp.setText(ip);
+        }
+
+        if (!StringUtils.isEmpty(port)) {
+            etPort.setText(port);
+        }
     }
 
     @Override

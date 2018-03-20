@@ -10,17 +10,17 @@ import com.shqtn.yaopi.utils.JsonUtils;
  */
 
 public class KsoapModel {
-    private String WSDL_URI ;//wsdl 的uri
+    private String WSDL_URI;//wsdl 的uri
     private String namespace = "http://pda.qberp.itf.nc/QbInterfaceService";//namespace
     private String methodName = "qbInterfaceService";//要调用的方法名称
 
     private String paramsContent;//请求体
+
     public KsoapModel() {
         String ip = IpChangeUtils.getIp(App.getInstance());
-        String post = IpChangeUtils.getPost(App.getInstance());
-        WSDL_URI = ip + ":" + post + "/uapws/service/nc.itf.qberp.pda.QbInterfaceService";
+        String post = IpChangeUtils.getPort(App.getInstance());
+        WSDL_URI = "http://" + ip + ":" + post + "/uapws/service/nc.itf.qberp.pda.QbInterfaceService";
     }
-
 
 
     public KsoapModel url(String url) {
@@ -44,7 +44,7 @@ public class KsoapModel {
     }
 
     public KsoapRequestCall build() {
-        return  new KsoapRequestCall(WSDL_URI,namespace,methodName,paramsContent);
+        return new KsoapRequestCall(WSDL_URI, namespace, methodName, paramsContent);
     }
 
 }
