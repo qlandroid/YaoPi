@@ -14,6 +14,7 @@ import com.shqtn.yaopi.controller.presenter.OperateBoxBean;
 import com.shqtn.yaopi.controller.presenter.TextPresenterBean;
 import com.shqtn.yaopi.controller.presenter.impl.GoodsAdjustRackTextPresenterImpl;
 import com.shqtn.yaopi.controller.presenter.impl.NormalScanningBoxPresenter;
+import com.shqtn.yaopi.utils.LogUtils;
 import com.shqtn.yaopi.utils.ParamsFactory;
 
 import java.util.Arrays;
@@ -101,8 +102,9 @@ public class FunctionSelectActivity extends BaseActivity implements BaseQuickAda
             //货位调整
             Bundle bundle = new Bundle();
             ScanningTextActivity.put(GoodsAdjustRackTextPresenterImpl.class, bundle);
-            startActivity(ScanningBoxActivity.class, bundle);
+            startActivity(ScanningTextActivity.class, bundle);
         } else {
+            //跳转普通的 类型，需要添加箱号
             Bundle bundle = new Bundle();
             ScanningTextActivity.put(beans[position], bundle);
             startActivity(ScanningTextActivity.class, bundle);

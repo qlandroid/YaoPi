@@ -18,6 +18,10 @@ import com.shqtn.yaopi.ui.widget.LabelTextView;
 
 import java.util.List;
 
+/**
+ * 添加箱子页面
+ * 包含文字Fragment ,添加箱子的Fragment;
+ */
 public class ScanningBoxActivity extends BaseActivity implements BoxListFragment.OnClickBoxButtonListener, AddBoxController.IView {
     public static final String NORMAL = "normal";
     @BindView(R.id.activity_scanning_box_ltv_add_size)
@@ -70,6 +74,7 @@ public class ScanningBoxActivity extends BaseActivity implements BoxListFragment
             mPresenter = new NormalScanningBoxPresenter(bean);
 
         }
+
         mPresenter.setBundle(getBundle());
         mPresenter.setView(this);
         mPresenter.init();
@@ -91,6 +96,7 @@ public class ScanningBoxActivity extends BaseActivity implements BoxListFragment
         }
 
     }
+
 
     @Override
     public void setManifestNo(String manifestNo) {
@@ -135,6 +141,11 @@ public class ScanningBoxActivity extends BaseActivity implements BoxListFragment
     @Override
     public void setAddFragmentButton(String name) {
         mBoxListFragment.setButton(name);
+    }
+
+    @Override
+    public void resultDecode(String resultContent) {
+        mPresenter.resultCode(resultContent);
     }
 
     @Override

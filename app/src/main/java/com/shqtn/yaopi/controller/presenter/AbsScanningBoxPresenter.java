@@ -34,7 +34,7 @@ import static java.security.AccessController.getContext;
 public abstract class AbsScanningBoxPresenter implements AddBoxController.IPresenter {
     public static final int SHOW_TEXT = 0x222;
     public static final int SHOW_LIST = 0X333;
-    public int showTag;
+    public int showTag = SHOW_TEXT;
 
     private AddBoxController.IView mView;
     private Bundle bundle;
@@ -129,11 +129,13 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
                 item.boxNo = addBoxParams.getBoxno();
                 //添加成功
                 mBoxList.add(item);
+
                 getView().setAddBoxSize(mBoxList.size());
                 getView().updateList(mBoxList);
-                if (showTag == SHOW_TEXT) {
+                if (mBoxList.size() == 0) {
+                    getView().changeTextFragment();
+                } else {
                     getView().changeAddBoxFragment();
-                    showTag = SHOW_LIST;
                 }
             }
 
@@ -191,10 +193,16 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
         });
     }
 
+    /**
+     * 解码货位成功的回调
+     */
     public void decodeRackSuccess() {
 
     }
 
+    /**
+     * 用于提交箱子。
+     */
     public void submit() {
         if (isSubmiting) {
             return;
@@ -207,6 +215,9 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
 
         Psn psn = ParamsFactory.getPsn(App.getInstance());
         params.setPsn(psn);
+        /*
+         * 用于判断当前是否扫描了货位，如果扫描到了货位需要提交货位信息
+         */
         if (mScanningRackParams == null) {
             mScanningRackParams = new Item();
             mScanningRackParams.setBillcode(getBundle().getString(C.MANIFEST_NO));

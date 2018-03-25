@@ -14,13 +14,13 @@ import com.shqtn.yaopi.bean.params.Safety;
 
 public class TextPresenterBean implements Parcelable {
 
-    private String title;
-    private String content;
-    private Class toActivity;
-    private Class presenter;
-    private Safety safety;
+    private String title;//页面的title
+    private String content;//页面中需要显示的内容
+    private Class toActivity;//扫描成功后跳转的页面
+    private Class presenter;//跳转后页面的 操作这
+    private Safety safety;//请求参数
 
-    private OperateBoxBean operateBoxBean;
+    private OperateBoxBean operateBoxBean;//需要操作的箱子
 
     public TextPresenterBean() {
     }

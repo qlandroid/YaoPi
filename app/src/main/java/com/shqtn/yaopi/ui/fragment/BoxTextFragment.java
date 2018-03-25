@@ -22,6 +22,9 @@ public class BoxTextFragment extends BaseFragment {
     @BindView(R.id.frag_box_text_tv)
     TextView tv;
 
+    private boolean isCreate;
+    private String content;
+
     public static BoxTextFragment newInstance(OnClickBackListener l) {
 
         Bundle args = new Bundle();
@@ -40,9 +43,16 @@ public class BoxTextFragment extends BaseFragment {
     @Override
     public void initWidget(View view) {
         super.initWidget(view);
+        if (content != null) {
+            tv.setText(content);
+        }
+        isCreate = true;
     }
 
     public void setContent(String content) {
-        tv.setText(content);
+        if (isCreate) {
+            tv.setText(content);
+        }
+        this.content = content;
     }
 }

@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity {
     @PermissionGrant(REQUECT_CODE_SDCARD)
     public void requestSdcardSuccess() {
         //统一
-        Toast.makeText(this, "GRANT ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "获得所有权限成功", Toast.LENGTH_SHORT).show();
     }
 
     @PermissionDenied(REQUECT_CODE_SDCARD)

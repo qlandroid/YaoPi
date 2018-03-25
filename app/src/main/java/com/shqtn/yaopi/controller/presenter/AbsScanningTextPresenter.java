@@ -121,6 +121,7 @@ public abstract class AbsScanningTextPresenter implements ScanningTextController
      * @param scanningCode
      */
     public void putBundle(Bundle bundle, ResultBean resultBean, String scanningCode) {
+        bundle.putString(C.MANIFEST_NO, scanningCode);
         bundle.putString(C.DECODE, scanningCode);
         bundle.putString(C.DECODE_QTY, resultBean.getNcback().getQuantity());
     }

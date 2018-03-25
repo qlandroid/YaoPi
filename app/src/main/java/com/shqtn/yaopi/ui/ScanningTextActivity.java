@@ -11,6 +11,10 @@ import com.shqtn.yaopi.controller.ScanningTextController;
 import com.shqtn.yaopi.controller.presenter.TextPresenterBean;
 import com.shqtn.yaopi.controller.presenter.impl.NormalTextPresenterImpl;
 
+/**
+ * 功能性扫描入口
+ * 如提示扫描某任务单号
+ */
 public class ScanningTextActivity extends BaseActivity implements ScanningTextController.IView {
     public static final String PRESENTER_NAME = "presenterName";
 

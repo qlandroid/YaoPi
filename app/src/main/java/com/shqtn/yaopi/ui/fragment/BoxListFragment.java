@@ -25,9 +25,12 @@ public class BoxListFragment extends BaseFragment {
     ListView lv;
     @BindView(R.id.frag_box_list_btn)
     Button btn;
+    private String btnName;
+    private boolean isCreate;
 
     CommonAdapter<Item> mBoxAddItemAdapter;
     private OnClickBoxButtonListener onClickBoxButtonListener;
+    private List<Item> datas;
 
     public static BoxListFragment newInstance(OnClickBackListener l, OnClickBoxButtonListener boxL) {
 
@@ -60,17 +63,31 @@ public class BoxListFragment extends BaseFragment {
 
     @Override
     public void initWidget(View view) {
+        isCreate = true;
         lv.setAdapter(mBoxAddItemAdapter);
         btn.setOnClickListener(this);
+        if (btnName != null) {
+            btn.setText(btnName);
+        }
+        mBoxAddItemAdapter.update(datas);
     }
 
     public void update(List<Item> list) {
-        mBoxAddItemAdapter.update(list);
+        if (isCreate) {
+            mBoxAddItemAdapter.update(list);
+        }
+        this.datas = list;
+
     }
 
     public void setButton(String name) {
-        btn.setText(name);
+        if (isCreate) {
+            btn.setText(name);
+        }
+        btnName = name;
+
     }
+
 
     @Override
     public void clickWidget(View v) {
@@ -85,12 +102,16 @@ public class BoxListFragment extends BaseFragment {
     }
 
     public interface OnClickBoxButtonListener {
+        /**
+         * 点击左边的按钮
+         * 目前出现的按钮类型为：添加货位，提交;
+         */
         void onClickBoxButton();
     }
 
     public static class Item {
         public String boxNo;
         public String batchNo;
-        public String qb;//无聊
+        public String qb;//物料
     }
 }
