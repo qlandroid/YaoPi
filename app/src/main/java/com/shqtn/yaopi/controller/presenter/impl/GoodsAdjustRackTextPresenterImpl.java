@@ -21,19 +21,20 @@ public class GoodsAdjustRackTextPresenterImpl extends NormalTextPresenterImpl {
 
     public GoodsAdjustRackTextPresenterImpl() {
         super();
-        TextPresenterBean bean = new TextPresenterBean("货位调整", "请扫调出描货位条码",
-                ScanningTextActivity.class, GoodsAdjustRackTextPresenterImpl.class, ParamsFactory.GoodsAdjust.createScanningManfiest()
+
+        TextPresenterBean bean = new TextPresenterBean("货位调整", "请扫描调出货位条码",
+                ScanningTextActivity.class, GoodsAdjustTargetRackTextPresenterImpl.class, ParamsFactory.GoodsAdjust.createScanningManfiest()
                 , null);
         setTextPresenterBean(bean);
 
         setGetItemParams(new GetRackTargetItemParamsImpl());
-    }
 
+    }
 
 
     @Override
     public void putBundle(Bundle bundle, ResultBean resultBean, String scanningCode) {
-        bundle.putString(C.RACK_NO,scanningCode);
-        ScanningTextActivity.put(GoodsAdjustTargetRackTextPresenterImpl.class,bundle);
+        bundle.putString(C.RACK_NO, scanningCode);
+        ScanningTextActivity.put(GoodsAdjustTargetRackTextPresenterImpl.class, bundle);
     }
 }

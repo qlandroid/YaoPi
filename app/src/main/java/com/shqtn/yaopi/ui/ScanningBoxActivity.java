@@ -104,6 +104,11 @@ public class ScanningBoxActivity extends BaseActivity implements BoxListFragment
     }
 
     @Override
+    public void setManifestLabel(String manifestLabel) {
+        ltvManifest.setLabelText(manifestLabel);
+    }
+
+    @Override
     public void setBoxSize(int boxSize) {
         ltvBoxSize.setText(String.valueOf(boxSize));
     }

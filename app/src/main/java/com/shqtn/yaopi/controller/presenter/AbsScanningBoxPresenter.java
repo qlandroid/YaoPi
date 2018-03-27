@@ -72,7 +72,7 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
             params.setSafety(s);
             addBoxParams = new Item();
 
-            setAddBoxItemParams(addBoxParams);
+            setAddBoxItemParams();
             params.setItem(addBoxParams);
 
         }
@@ -90,7 +90,37 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
         KsoapModelService.run(params, mAddBoxCallback);
     }
 
-    public void setAddBoxItemParams(Item addBoxParams) {
+    /**
+     * 用于货位调整 添加箱子
+     *
+     * @param code
+     */
+    public void decodeBoxByRack(String code) {
+        if (params == null) {
+            params = new SubmitParams();
+            Safety s = getScanningBoxNoSafety();
+            params.setSafety(s);
+            addBoxParams = new Item();
+            String string = getBundle().getString(C.RACK_NO);
+            this.addBoxParams.setBillcode(string);
+            params.setItem(addBoxParams);
+
+        }
+
+        addBoxParams.setBoxno(code);
+
+        if (mAddBoxCallback == null) {
+            mAddBoxCallback = createAddBoxCallback();
+        }
+        if (isSubmiting) {
+            return;
+        }
+        getView().displayLoadingDialog("解码中");
+        isSubmiting = true;
+        KsoapModelService.run(params, mAddBoxCallback);
+    }
+
+    public void setAddBoxItemParams() {
         /*if (rackAddBox) {
             String string = getBundle().getString(C.MANIFEST_NO);
             this.addBoxParams.setRackno(string);
@@ -109,6 +139,10 @@ public abstract class AbsScanningBoxPresenter implements AddBoxController.IPrese
             @Override
             public void onReplaceResponse(String s) {
                 ResultBean result = JsonUtils.getObject(s, ResultBean.class);
+                if (result == null) {
+                    onFailed("返回失败", null);
+                    return;
+                }
                 ResultBean.Ncback ncback = result.getNcback();
                 if (ncback == null) {
                     onFailed("返回失败", null);

@@ -25,6 +25,7 @@ public class AddBoxController {
 
     public interface IView extends IDialog {
         void setManifestNo(String manifestNo);
+        void setManifestLabel(String manifestLabel);
 
         void setBoxSize(int boxSize);
 

@@ -6,6 +6,7 @@ import com.shqtn.yaopi.bean.params.Item;
 import com.shqtn.yaopi.bean.params.ItemValues;
 import com.shqtn.yaopi.bean.params.Safety;
 import com.shqtn.yaopi.bean.params.SubmitParams;
+import com.shqtn.yaopi.controller.AddBoxController;
 import com.shqtn.yaopi.controller.presenter.AbsScanningBoxPresenter;
 import com.shqtn.yaopi.http.ksoap.KsoapModelService;
 import com.shqtn.yaopi.http.ksoap.StringCallback;
@@ -29,9 +30,12 @@ public class GoodsAdjustAddBoxPresenterImpl extends AbsScanningBoxPresenter {
     @Override
     public void init() {
         super.init();
-        getView().setAddFragmentButton("提交");
-
-
+        AddBoxController.IView view = getView();
+        view.setAddFragmentButton("提交");
+        view.setManifestLabel("货位");
+        String rackNo = getBundle().getString(C.RACK_NO);
+        String targetRackNo = getBundle().getString(C.RACK_NO_TARGET);
+        view.setManifestNo(String.format("%s \r\n->\r\n%s", rackNo, targetRackNo));
     }
 
     @Override
@@ -101,6 +105,6 @@ public class GoodsAdjustAddBoxPresenterImpl extends AbsScanningBoxPresenter {
 
     @Override
     public void resultCode(String code) {
-        decodeBox(code);
+        decodeBoxByRack(code);
     }
 }

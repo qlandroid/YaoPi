@@ -27,6 +27,9 @@ public class NormalTextPresenterImpl extends AbsScanningTextPresenter {
         this.textPresenterBean = textPresenterBean;
     }
 
+    public TextPresenterBean getTextPresenterBean() {
+        return textPresenterBean;
+    }
 
     @Override
     public void init() {
